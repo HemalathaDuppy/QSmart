@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Qsmart Clinic - Digital Token</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     BACKGROUND GLOW ORBS
+     ========================================================= -->
+
+<div class="glow-orb orb-1"></div>
+<div class="glow-orb orb-2"></div>
+<div class="glow-orb orb-3"></div>
+
+
+<!-- =========================================================
+     MAIN APPLICATION
+     ========================================================= -->
+
+<div class="app-container">
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="glass-header">
+
+        <div class="brand">
+
+            <div class="logo-icon">
+                <span style="font-size: 25px;">$</span>
+            </div>
+
+            <div>
+                <h1>
+                    QSmart
+                    <span class="badge-clinic">CARECLINIC</span>
+                </h1>
+
+                <div class="brand-sub">
+                    Digital Tokenizer & Live Queue Tracker
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Navigation is shown only on Page 3 -->
+
+        <nav class="nav-tabs" id="mainNavigation">
+
+            <button
+                class="tab-btn active"
+                id="patientViewBtn"
+                onclick="showDashboard('patient')">
+
+                <span>♙</span>
+                Patient View
+
+            </button>
+
+
+            <button
+                class="tab-btn"
+                id="waitingHallBtn"
+                onclick="showDashboard('waiting')">
+
+                <span>▣</span>
+                Waiting Hall Display
+
+            </button>
+
+
+            <button
+                class="tab-btn"
+                id="staffDashboardBtn"
+                onclick="showDashboard('staff')">
+
+                <span>♧</span>
+                Staff Dashboard
+
+            </button>
+
+        </nav>
+
+
+        <div class="clinic-status-indicator">
+
+            <span class="status-dot pulsing"></span>
+
+            Clinic Open (Live Synced)
+
+        </div>
+
+        <!-- Staff auth status, populated by client.js from /api/me -->
+        <div id="staffAuthArea" class="staff-auth-area"></div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT VIEWPORT
+         ===================================================== -->
+
+    <main class="content-viewport">
+
+
+        <!-- =================================================
+             PAGE 1 : WELCOME PAGE
+             ================================================= -->
+
+        <section id="welcomePage" class="tab-content active">
+
+            <div class="welcome-page">
+
+                <div class="welcome-icon">
+                    🏥
+                </div>
+
+                <h1>
+                    Welcome to Qsmart Clinic
+                </h1>
+
+                <p>
+                    Your health and comfort are our priority.
+                </p>
+
+                <button
+                    class="get-started-btn"
+                    id="getStartedBtn">
+
+                    Get Started
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PAGE 2 : PATIENT LOGIN
+             ================================================= -->
+
+        <section id="loginPage" class="tab-content">
+
+            <div class="login-page-wrapper">
+
+                <div class="login-card glass-card">
+
+                    <div class="card-header">
+
+                            <span class="pill-tag">
+                            ACCOUNT PORTAL
+                        </span>
+
+                        <h2>
+                            Account Login
+                        </h2>
+
+                        <p class="card-desc">
+                            Sign in with your clinic account
+                        </p>
+
+                    </div>
+
+
+                    <!-- LOGIN FORM -->
+
+                    <form
+                        id="loginForm"
+                        class="kiosk-form">
+
+
+                        <!-- Email -->
+
+                        <div class="form-group">
+
+                            <label for="loginEmail">
+                                Email
+                            </label>
+
+                            <div class="input-glass-wrap">
+
+                                <span class="input-icon">
+                                    ♙
+                                </span>
+
+                                <input
+                                    id="loginEmail"
+                                    type="email"
+                                    placeholder="Enter Email"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Password -->
+
+                        <div class="form-group">
+
+                            <label for="loginPassword">
+                                Password
+                            </label>
+
+                            <div class="input-glass-wrap">
+
+                                <span class="input-icon">
+                                    🔒
+                                </span>
+
+                                <input
+                                    type="password"
+                                    id="loginPassword"
+                                    placeholder="Enter Password"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Login Button -->
+
+                        <button
+                            type="submit"
+                            class="glow-button">
+
+                            Login
+                            <span>→</span>
+
+                        </button>
+
+                        <p id="loginError" role="alert" aria-live="polite"></p>
+
+                    </form>
+
+                    <button
+                        type="button"
+                        class="back-button"
+                        id="showSignupButton">
+
+                        Create an account
+
+                    </button>
+
+                    <form
+                        id="signupForm"
+                        class="kiosk-form"
+                        style="display:none">
+
+                        <div class="form-group">
+                            <label for="signupName">Name</label>
+                            <input id="signupName" type="text" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input id="signupEmail" type="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPhone">Phone</label>
+                            <input id="signupPhone" type="tel" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupRole">Account Type</label>
+                            <select id="signupRole" required>
+                                <option value="patient">Patient</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input id="signupPassword" type="password" minlength="8" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                            <input id="signupConfirmPassword" type="password" minlength="8" required>
+                        </div>
+
+                        <button type="submit" class="glow-button">Create Account</button>
+                    </form>
+
+
+                    <!-- Back Button -->
+
+                    <button
+                        class="back-button"
+                        onclick="showPage('welcomePage')">
+
+                        ← Back to Welcome
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PAGE 3 : DIGITAL TOKEN DASHBOARD
+             ================================================= -->
+
+        <section id="tokenPage" class="tab-content">
+
+
+            <!-- =================================================
+                 PATIENT VIEW
+                 ================================================= -->
+
+            <div
+                id="patientDashboard"
+                class="dashboard-view">
+
+
+                <div class="token-dashboard-container">
+
+
+                    <!-- PATIENT TOKEN CARD -->
+
+                    <div class="glass-ticket">
+
+
+                        <!-- Doctor Header -->
+
+                        <div class="ticket-header">
+
+                            <div>
+
+                                <div class="clinic-sub-label">
+                                    QSMART CARECLINIC
+                                </div>
+
+                                <h3 id="patientDoctorName">
+                                    Dr. Sarah Jenkins
+                                </h3>
+
+                                <div
+                                    class="ticket-dept"
+                                    id="patientDoctorDept">
+
+                                    General Medicine • Consulting Room 1
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="doctor-status">
+
+                                <span
+                                    id="currentTime">
+                                    11:28 AM
+                                </span>
+
+                                <span class="active-badge">
+                                    ● ACTIVE
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- TOKEN MAIN AREA -->
+
+                        <div class="token-main">
+
+
+                            <div class="token-label">
+                                YOUR TOKEN NUMBER
+                            </div>
+
+
+                            <div
+                                class="big-token-number"
+                                id="patientTokenNumber">
+
+                                A-105
+
+                            </div>
+
+
+                            <div class="patient-token-name">
+
+                                Patient:
+                                <span id="displayPatientName">
+                                    Patient
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- TOKEN INFORMATION -->
+
+                            <div class="token-info-grid">
+
+
+                                <!-- Currently Serving -->
+
+                                <div class="token-info-card serving-card">
+
+                                    <div class="info-icon">
+                                        ▶
+                                    </div>
+
+                                    <div>
+
+                                        <span>
+                                            CURRENTLY SERVING
+                                        </span>
+
+                                        <strong id="currentlyServing">
+                                            A-102
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- People Ahead -->
+
+                                <div class="token-info-card">
+
+                                    <div class="info-icon">
+                                        ♧
+                                    </div>
+
+                                    <div>
+
+                                        <span>
+                                            PEOPLE AHEAD
+                                        </span>
+
+                                        <strong id="peopleAhead">
+                                            2
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- Estimated Waiting Time -->
+
+                                <div class="token-info-card waiting-card">
+
+                                    <div class="info-icon">
+                                        ◷
+                                    </div>
+
+                                    <div>
+
+                                        <span>
+                                            ESTIMATED WAIT TIME
+                                        </span>
+
+                                        <strong id="estimatedWait">
+                                            ~20 mins
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- QUEUE PROGRESS -->
+
+                            <div class="queue-progress-section">
+
+                                <div class="queue-progress-header">
+
+                                    <span>
+                                        Queue Progress
+                                    </span>
+
+                                    <span id="queueAheadText">
+                                        2 ahead
+                                    </span>
+
+                                </div>
+
+
+                                <div class="progress-bar">
+
+                                    <div
+                                        class="progress-fill"
+                                        id="queueProgress"
+                                        style="width: 65%;">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- QUEUE STATUS -->
+
+                            <div class="queue-status">
+
+                                <span>
+                                    Waiting in Queue
+                                </span>
+
+                                <span>
+                                    (2 ahead)
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- TICKET FOOTER -->
+
+                        <div class="ticket-footer">
+
+                            <div class="ticket-message">
+
+                                💡 Feel free to wait in the cafeteria or parking area.
+                                This page refreshes automatically in real time.
+
+                            </div>
+
+
+                            <div class="ticket-actions">
+
+                                <button
+                                    class="secondary-button"
+                                    onclick="cancelToken()">
+
+                                    Cancel Token
+
+                                </button>
+
+
+                                <button
+                                    class="new-token-button"
+                                    onclick="startNewToken()">
+
+                                    New Token
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 WAITING HALL DISPLAY
+                 ================================================= -->
+
+            <div
+                id="waitingDashboard"
+                class="dashboard-view">
+
+
+                <div class="waiting-hall-card glass-card">
+
+
+                    <div class="waiting-header">
+
+                        <div>
+
+                            <span class="pill-tag red-tag">
+                                LIVE CLINIC DISPLAY
+                            </span>
+
+                            <h2>
+                                Waiting Room Token Board
+                            </h2>
+
+                            <p class="card-desc">
+                                Real-time consultation status across all clinic consulting rooms.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="large-clock"
+                            id="hallClock">
+
+                            11:39:56 AM
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DOCTOR CARDS -->
+
+                    <div class="doctor-board-grid">
+
+
+                        <!-- Doctor 1 -->
+
+                        <div class="doctor-board-card accent-cyan">
+
+                            <div class="doctor-board-header">
+
+                                <div class="doctor-id-group">
+
+                                    <div class="doctor-avatar">SJ</div>
+
+                                    <div>
+
+                                        <h3>
+                                            Dr. Sarah Jenkins
+                                        </h3>
+
+                                        <p>
+                                            General Medicine
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <span class="room-badge">
+                                    Room 1
+                                </span>
+
+                            </div>
+
+
+                            <div class="currently-serving-area">
+
+                                <span>
+                                    CURRENTLY SERVING
+                                </span>
+
+                                <strong>
+                                    A-102
+                                </strong>
+
+                                <p>
+                                    Patient: Emma Watson
+                                </p>
+
+                            </div>
+
+
+                            <div class="next-queue">
+
+                                <span>
+                                    Next in Queue
+                                </span>
+
+                                <div>
+
+                                    <span>A-103</span>
+                                    <span>A-104</span>
+                                    <span>A-105</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Doctor 2 -->
+
+                        <div class="doctor-board-card accent-purple">
+
+                            <div class="doctor-board-header">
+
+                                <div class="doctor-id-group">
+
+                                    <div class="doctor-avatar">AM</div>
+
+                                    <div>
+
+                                        <h3>
+                                            Dr. Alan Miller
+                                        </h3>
+
+                                        <p>
+                                            Pediatrics & Child Care
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <span class="room-badge">
+                                    Room 2
+                                </span>
+
+                            </div>
+
+
+                            <div class="currently-serving-area">
+
+                                <span>
+                                    CURRENTLY SERVING
+                                </span>
+
+                                <strong>
+                                    B-101
+                                </strong>
+
+                                <p>
+                                    Patient: Liam Johnson
+                                </p>
+
+                            </div>
+
+
+                            <div class="next-queue">
+
+                                <span>
+                                    Next in Queue
+                                </span>
+
+                                <div>
+
+                                    <span>B-102</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Doctor 3 -->
+
+                        <div class="doctor-board-card accent-amber">
+
+                            <div class="doctor-board-header">
+
+                                <div class="doctor-id-group">
+
+                                    <div class="doctor-avatar">PP</div>
+
+                                    <div>
+
+                                        <h3>
+                                            Dr. Priya Patel
+                                        </h3>
+
+                                        <p>
+                                            Dermatology & Skin Care
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <span class="room-badge">
+                                    Room 3
+                                </span>
+
+                            </div>
+
+
+                            <div class="currently-serving-area">
+
+                                <span>
+                                    CURRENTLY SERVING
+                                </span>
+
+                                <strong>
+                                    C-101
+                                </strong>
+
+                                <p>
+                                    Patient: Aria Stark
+                                </p>
+
+                            </div>
+
+
+                            <div class="next-queue">
+
+                                <span>
+                                    Next in Queue
+                                </span>
+
+                                <div>
+
+                                    <span class="queue-empty">
+                                        Queue empty
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STAFF DASHBOARD
+                 ================================================= -->
+
+            <div
+                id="staffDashboard"
+                class="dashboard-view">
+
+
+                <div class="staff-dashboard">
+
+
+                    <!-- LEFT SIDE -->
+
+                    <div class="staff-selection glass-card">
+
+                        <span class="pill-tag blue-tag">
+                            STAFF CONSOLE
+                        </span>
+
+                        <h2>
+                            Doctor & Room
+                            Selection
+                        </h2>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Select Operating Doctor
+                            </label>
+
+                            <select
+                                id="staffDoctorSelect"
+                                class="glass-select">
+
+                                <option>
+                                    Dr. Sarah Jenkins (Consulting Room 1)
+                                </option>
+
+                                <option>
+                                    Dr. Alan Miller (Consulting Room 2)
+                                </option>
+
+                                <option>
+                                    Dr. Priya Patel (Consulting Room 3)
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- CURRENT CONSULTATION -->
+
+                        <div class="current-consultation">
+
+                            <span>
+                                NOW CONSULTING IN THIS ROOM
+                            </span>
+
+                            <strong>
+                                A-102
+                            </strong>
+
+                            <p>
+                                Patient: Emma Watson
+                            </p>
+
+                            <div class="consult-timer">
+                                <span class="timer-dot"></span>
+                                In consultation: ~16 min
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CALL NEXT -->
+
+                        <button
+                            class="call-next-button"
+                            onclick="callNextPatient()">
+
+                            ▶
+                            Call Next Patient
+
+                        </button>
+
+
+
+                        <div class="staff-action-grid">
+
+                            <button
+                                class="recall-button"
+                                onclick="recallPatient()">
+
+                                🔔
+                                <span>
+                                    Recall / Re-Announce
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="complete-button"
+                                onclick="completeVisit()">
+
+                                ✓
+                                <span>
+                                    Complete Visit
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RIGHT SIDE -->
+
+                    <div class="queue-management glass-card">
+
+
+                        <!-- TABS -->
+
+                        <div class="staff-tabs">
+
+                            <button class="staff-tab active">
+                                Waiting Queue (3)
+                            </button>
+
+                            <button class="staff-tab">
+                                Today's History (1)
+                            </button>
+
+                        </div>
+
+
+
+                        <!-- QUEUE TABLE -->
+
+                        <div class="queue-table-wrapper">
+
+                            <table class="queue-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            TOKEN #
+                                        </th>
+
+                                        <th>
+                                            PATIENT NAME
+                                        </th>
+
+                                        <th>
+                                            CREATED
+                                        </th>
+
+                                        <th>
+                                            EST. WAIT
+                                        </th>
+
+                                        <th>
+                                            ACTION
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="staffQueueBody">
+
+                                    <tr>
+
+                                        <td>
+                                            <span class="table-token">
+                                                A-103
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="patient-cell">
+                                                <span class="patient-avatar">MC</span>
+                                                Michael Chang
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            11:13 AM
+                                        </td>
+
+                                        <td>
+                                            <span class="wait-pill wait-now">~0m</span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="call-now-button"
+                                                onclick="callSpecificPatient('A-103')">
+
+                                                Call Now
+
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>
+                                            <span class="table-token">
+                                                A-104
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="patient-cell">
+                                                <span class="patient-avatar">SR</span>
+                                                Sophia Rodriguez
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            11:20 AM
+                                        </td>
+
+                                        <td>
+                                            <span class="wait-pill">~10m</span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="call-now-button"
+                                                onclick="callSpecificPatient('A-104')">
+
+                                                Call Now
+
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>
+                                            <span class="table-token">
+                                                A-105
+                                            </span>
+                                        </td>
+
+                                        <td id="staffPatientName">
+                                            <div class="patient-cell">
+                                                <span class="patient-avatar">P</span>
+                                                Patient
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            11:28 AM
+                                        </td>
+
+                                        <td>
+                                            <span class="wait-pill">~20m</span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="call-now-button"
+                                                onclick="callSpecificPatient('A-105')">
+
+                                                Call Now
+
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script src="client.js"></script>
+
+</body>
+</html>

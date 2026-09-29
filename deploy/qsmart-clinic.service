@@ -1,0 +1,28 @@
+# /etc/systemd/system/qsmart-clinic.service
+#
+# Install:
+#   sudo cp deploy/qsmart-clinic.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now qsmart-clinic
+#
+# Logs:
+#   journalctl -u qsmart-clinic -f
+
+[Unit]
+Description=Qsmart Clinic Node.js app
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/qsmart-clinic
+EnvironmentFile=-/home/ubuntu/qsmart-clinic/.env
+ExecStart=/usr/bin/node server/server.js
+Restart=on-failure
+RestartSec=5
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
