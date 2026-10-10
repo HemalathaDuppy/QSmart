@@ -1,5 +1,5 @@
 # Qsmart Clinic
-
+   
 Qsmart Clinic is a digital clinic queue and appointment management application built with Node.js, Express, and SQLite. It supports patient self-service booking and staff-side queue management from a browser-based interface.
 
 ## Overview
